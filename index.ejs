@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Tracker</h1>
+        <form action="/calculate" method="POST">
+            <div class="form-group">
+                <label for="subjectName">Subject Name:</label>
+                <input type="text" id="subjectName" name="subjectName" required>
+            </div>
+            <div class="form-group">
+                <label for="totalClasses">Total Number of Classes in Semester:</label>
+                <input type="number" id="totalClasses" name="totalClasses" required min="1">
+            </div>
+            <div class="form-group">
+                <label for="classesTaken">Total Number of Classes Taken Till Now:</label>
+                <input type="number" id="classesTaken" name="classesTaken" required min="1">
+            </div>
+            <div class="form-group">
+                <label for="attendedClasses">Classes Attended Till Now:</label>
+                <input type="number" id="attendedClasses" name="attendedClasses" required min="0">
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+</body>
+</html> 

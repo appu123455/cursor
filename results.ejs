@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Results</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Results</h1>
+        <h2 class="subject-name"><%= subjectName %></h2>
+        <div class="results">
+            <div class="result-item">
+                <h3>Current Attendance</h3>
+                <p><%= currentPercentage %>%</p>
+            </div>
+            <div class="result-item">
+                <h3>Classes Taken</h3>
+                <p><%= classesTaken %> / <%= totalClasses %></p>
+            </div>
+            <div class="result-item">
+                <h3>Classes Bunked</h3>
+                <p><%= bunkedClasses %></p>
+            </div>
+            <div class="result-item">
+                <h3>Classes Needed for 85%</h3>
+                <% if (isAchievable) { %>
+                    <p><%= classesNeededFor85 %></p>
+                <% } else { %>
+                    <p class="warning">Cannot achieve 85%</p>
+                    <p class="sub-text">Only <%= remainingClasses %> classes remaining</p>
+                <% } %>
+            </div>
+            <div class="result-item">
+                <h3>Remaining Bunkable Classes</h3>
+                <p><%= remainingBunkable %></p>
+            </div>
+        </div>
+        <a href="/" class="button">Calculate Again</a>
+    </div>
+</body>
+</html> 
