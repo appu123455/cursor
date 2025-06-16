@@ -5,39 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Results</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Attendance Results</h1>
-        <h2 class="subject-name"><%= subjectName %></h2>
+        <h1><i class="fas fa-chart-line"></i> Attendance Results</h1>
+        <h2 class="subject-name"><i class="fas fa-book"></i> <%= subjectName %></h2>
+        
         <div class="results">
             <div class="result-item">
-                <h3>Current Attendance</h3>
+                <h3><i class="fas fa-percentage"></i> Current Attendance</h3>
+                <div class="attendance-progress">
+                    <div class="attendance-progress-bar" style="width: <%= currentPercentage %>%"></div>
+                </div>
                 <p><%= currentPercentage %>%</p>
-            </div>
-            <div class="result-item">
-                <h3>Classes Taken</h3>
-                <p><%= classesTaken %> / <%= totalClasses %></p>
-            </div>
-            <div class="result-item">
-                <h3>Classes Bunked</h3>
-                <p><%= bunkedClasses %></p>
-            </div>
-            <div class="result-item">
-                <h3>Classes Needed for 85%</h3>
-                <% if (isAchievable) { %>
-                    <p><%= classesNeededFor85 %></p>
+                <% if (currentPercentage >= 85) { %>
+                    <span class="success-badge"><i class="fas fa-check-circle"></i> Above Target</span>
                 <% } else { %>
-                    <p class="warning">Cannot achieve 85%</p>
-                    <p class="sub-text">Only <%= remainingClasses %> classes remaining</p>
+                    <span class="warning-badge"><i class="fas fa-exclamation-circle"></i> Below Target</span>
                 <% } %>
             </div>
+
             <div class="result-item">
-                <h3>Remaining Bunkable Classes</h3>
+                <h3><i class="fas fa-clock"></i> Progress</h3>
+                <p><%= classesTaken %> / <%= totalClasses %></p>
+                <div class="progress-text">
+                    <%= Math.round((classesTaken/totalClasses) * 100) %>% of semester completed
+                </div>
+            </div>
+
+            <div class="result-item">
+                <h3><i class="fas fa-calendar-times"></i> Classes Bunked</h3>
+                <p><%= bunkedClasses %></p>
+                <div class="progress-text">
+                    <%= Math.round((bunkedClasses/classesTaken) * 100) %>% of taken classes
+                </div>
+            </div>
+
+            <div class="result-item">
+                <h3><i class="fas fa-bullseye"></i> Target Status</h3>
+                <% if (isAchievable) { %>
+                    <p class="success-text"><%= classesNeededFor85 %></p>
+                    <div class="progress-text">Classes needed for 85%</div>
+                <% } else { %>
+                    <p class="warning">Cannot achieve 85%</p>
+                    <div class="progress-text">Only <%= remainingClasses %> classes remaining</div>
+                <% } %>
+            </div>
+
+            <div class="result-item">
+                <h3><i class="fas fa-calendar-minus"></i> Remaining Bunkable</h3>
                 <p><%= remainingBunkable %></p>
+                <div class="progress-text">
+                    <%= Math.round((remainingBunkable/remainingClasses) * 100) %>% of remaining classes
+                </div>
             </div>
         </div>
-        <a href="/" class="button">Calculate Again</a>
+
+        <a href="/" class="button">
+            <i class="fas fa-calculator"></i> Calculate Again
+        </a>
     </div>
+
+    <style>
+        .success-badge, .warning-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .success-badge {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .warning-badge {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .success-text {
+            color: var(--success-color) !important;
+        }
+    </style>
+
+    <script>
+        // Animate progress bars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.attendance-progress-bar');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
 </body>
 </html> 
