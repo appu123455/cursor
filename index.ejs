@@ -5,29 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Tracker</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Attendance Tracker</h1>
+        <h1><i class="fas fa-calendar-check"></i> Attendance Tracker</h1>
         <form action="/calculate" method="POST">
             <div class="form-group">
-                <label for="subjectName">Subject Name:</label>
-                <input type="text" id="subjectName" name="subjectName" required>
+                <label for="subjectName">
+                    <i class="fas fa-book"></i> Subject Name
+                </label>
+                <input type="text" id="subjectName" name="subjectName" required 
+                       placeholder="Enter subject name">
             </div>
             <div class="form-group">
-                <label for="totalClasses">Total Number of Classes in Semester:</label>
-                <input type="number" id="totalClasses" name="totalClasses" required min="1">
+                <label for="totalClasses">
+                    <i class="fas fa-chalkboard"></i> Total Classes in Semester
+                </label>
+                <input type="number" id="totalClasses" name="totalClasses" required min="1"
+                       placeholder="Enter total number of classes">
             </div>
             <div class="form-group">
-                <label for="classesTaken">Total Number of Classes Taken Till Now:</label>
-                <input type="number" id="classesTaken" name="classesTaken" required min="1">
+                <label for="classesTaken">
+                    <i class="fas fa-clock"></i> Classes Taken Till Now
+                </label>
+                <input type="number" id="classesTaken" name="classesTaken" required min="1"
+                       placeholder="Enter classes taken so far">
             </div>
             <div class="form-group">
-                <label for="attendedClasses">Classes Attended Till Now:</label>
-                <input type="number" id="attendedClasses" name="attendedClasses" required min="0">
+                <label for="attendedClasses">
+                    <i class="fas fa-user-check"></i> Classes Attended
+                </label>
+                <input type="number" id="attendedClasses" name="attendedClasses" required min="0"
+                       placeholder="Enter classes attended">
             </div>
-            <button type="submit">Calculate</button>
+            <button type="submit">
+                <i class="fas fa-calculator"></i> Calculate Attendance
+            </button>
         </form>
     </div>
+    <script>
+        // Add input validation
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+            });
+        });
+
+        // Add form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const totalClasses = parseInt(document.getElementById('totalClasses').value);
+            const classesTaken = parseInt(document.getElementById('classesTaken').value);
+            const attendedClasses = parseInt(document.getElementById('attendedClasses').value);
+
+            if (classesTaken > totalClasses) {
+                e.preventDefault();
+                alert('Classes taken cannot be more than total classes!');
+            }
+            if (attendedClasses > classesTaken) {
+                e.preventDefault();
+                alert('Classes attended cannot be more than classes taken!');
+            }
+        });
+    </script>
 </body>
 </html> 
